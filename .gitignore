@@ -23,3 +23,7 @@ war/
 # Other
 catalina.home_IS_UNDEFINED/
 .directory
+.m2repo/
+.tmp/
+.tools/
+dist/

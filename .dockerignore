@@ -1,0 +1,14 @@
+.git
+.github
+.idea
+.m2repo
+.tmp
+.tools
+target
+war
+dist
+screenshots
+gwt-unitCache
+*.iml
+*.war
+src/main/resources/version.properties

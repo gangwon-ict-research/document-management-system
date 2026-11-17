@@ -25,8 +25,31 @@ import org.owasp.encoder.Encode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.Normalizer;
+
 public class PathUtils {
 	private static Logger log = LoggerFactory.getLogger(PathUtils.class);
+
+	/**
+	 * Normalize to Unicode NFC so names coming from macOS (NFD) and Windows (NFC)
+	 * resolve to the same node. For example, Korean "한글" in NFD is stored as split jamo.
+	 */
+	public static String normalize(String str) {
+		if (str == null || Normalizer.isNormalized(str, Normalizer.Form.NFC)) {
+			return str;
+		}
+
+		return Normalizer.normalize(str, Normalizer.Form.NFC);
+	}
+
+	/**
+	 * Check if path is the same as or a descendant of parent ("/a/foo" is not inside "/a/fo").
+	 */
+	public static boolean isSameOrDescendant(String path, String parent) {
+		path = normalize(path);
+		parent = normalize(parent);
+		return path.equals(parent) || path.startsWith(parent.endsWith("/") ? parent : parent + "/");
+	}
 
 	/**
 	 * Get parent node.
@@ -89,7 +112,7 @@ public class PathUtils {
 	 * Eliminate forbidden chars in node name.
 	 */
 	public static String cleanup(String name) {
-		String ret = name.replace("/", "");
+		String ret = normalize(name).replace("/", "");
 		ret = ret.replace("*", "");
 		ret = ret.replaceAll("\\s+", " ").trim();
 		return ret;

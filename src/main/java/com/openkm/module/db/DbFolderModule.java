@@ -436,7 +436,7 @@ public class DbFolderModule implements FolderModule {
 			}
 
 			// Check for recursive move
-			if (dstPath.startsWith(fldPath)) {
+			if (PathUtils.isSameOrDescendant(dstPath, fldPath)) {
 				throw new RepositoryException("Recursive move detected");
 			}
 
@@ -512,7 +512,7 @@ public class DbFolderModule implements FolderModule {
 			}
 
 			// Check for recursive copy
-			if (dstPath.startsWith(fldPath)) {
+			if (PathUtils.isSameOrDescendant(dstPath, fldPath)) {
 				throw new RepositoryException("Recursive copy detected");
 			}
 

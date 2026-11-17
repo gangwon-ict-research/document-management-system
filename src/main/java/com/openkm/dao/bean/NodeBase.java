@@ -22,6 +22,7 @@
 package com.openkm.dao.bean;
 
 import com.openkm.module.db.stuff.*;
+import com.openkm.util.PathUtils;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
@@ -148,7 +149,7 @@ public class NodeBase implements Serializable {
 	}
 
 	public void setPath(String path) {
-		this.path = path;
+		this.path = PathUtils.normalize(path);
 	}
 
 	public String getParent() {
@@ -180,6 +181,8 @@ public class NodeBase implements Serializable {
 	}
 
 	public void setName(String name) {
+		name = PathUtils.normalize(name);
+
 		if (name != null && name.length() > MAX_NAME) {
 			this.name = name.substring(0, MAX_NAME);
 		} else {

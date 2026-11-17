@@ -175,13 +175,13 @@ public class DbSearchModule implements SearchModule {
 		BooleanQuery query = new BooleanQuery();
 
 		// Clean params
-		params.setName(params.getName() != null ? params.getName().trim() : "");
+		params.setName(params.getName() != null ? PathUtils.normalize(params.getName().trim()) : "");
 		params.setContent(params.getContent() != null ? params.getContent().trim() : "");
 		params.setKeywords(params.getKeywords() != null ? params.getKeywords() : new HashSet<>());
 		params.setCategories(params.getCategories() != null ? params.getCategories() : new HashSet<>());
 		params.setMimeType(params.getMimeType() != null ? params.getMimeType().trim() : "");
 		params.setAuthor(params.getAuthor() != null ? params.getAuthor().trim() : "");
-		params.setPath(params.getPath() != null ? params.getPath().trim() : "");
+		params.setPath(params.getPath() != null ? PathUtils.normalize(params.getPath().trim()) : "");
 		params.setMailSubject(params.getMailSubject() != null ? params.getMailSubject().trim() : "");
 		params.setMailFrom(params.getMailFrom() != null ? params.getMailFrom().trim() : "");
 		params.setMailTo(params.getMailTo() != null ? params.getMailTo().trim() : "");

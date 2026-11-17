@@ -230,7 +230,7 @@ public class NodeBaseDAO {
 		String name = "";
 
 		// Fix for & and &amp; strings in the path
-		path = PathUtils.encodeEntities(path);
+		path = PathUtils.encodeEntities(PathUtils.normalize(path));
 
 		for (StringTokenizer st = new StringTokenizer(path, "/"); st.hasMoreTokens(); ) {
 			name = st.nextToken();
@@ -1592,7 +1592,7 @@ public class NodeBaseDAO {
 		String qs = "from NodeBase nb where nb.parent=:parent and nb.name=:name";
 		Query q = session.createQuery(qs);
 		q.setString("parent", parent);
-		q.setString("name", name);
+		q.setString("name", PathUtils.normalize(name));
 
 		return !q.list().isEmpty();
 	}
